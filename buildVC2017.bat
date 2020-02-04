@@ -17,10 +17,10 @@ set ARCH=x86
 :: Adjust this if you have an edition other than Community
 set VSEDITION=Community
 
-if exist "%ProgramFiles%\Microsoft Visual Studio\2019\%VSEDITION%\VC\Auxiliary\Build\vcvarsall.bat" (
-	call "%ProgramFiles%\Microsoft Visual Studio\2019\%VSEDITION%\VC\Auxiliary\Build\vcvarsall.bat" %ARCH%
-) else if exist "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\%VSEDITION%\VC\Auxiliary\Build\vcvarsall.bat" (
-	call "%ProgramFiles(x86)%\Microsoft Visual Studio\2019\%VSEDITION%\VC\Auxiliary\Build\vcvarsall.bat" %ARCH%
+if exist "%ProgramFiles%\Microsoft Visual Studio\2017\%VSEDITION%\VC\Auxiliary\Build\vcvarsall.bat" (
+	call "%ProgramFiles%\Microsoft Visual Studio\2017\%VSEDITION%\VC\Auxiliary\Build\vcvarsall.bat" %ARCH%
+) else if exist "%ProgramFiles(x86)%\Microsoft Visual Studio\2017\%VSEDITION%\VC\Auxiliary\Build\vcvarsall.bat" (
+	call "%ProgramFiles(x86)%\Microsoft Visual Studio\2017\%VSEDITION%\VC\Auxiliary\Build\vcvarsall.bat" %ARCH%
 ) else (
 	echo Unable to locate vcvarsall.bat, aborting
 	pause
@@ -45,7 +45,7 @@ set CONF=%~2
 %~d0
 set origroot=%~dp0
 set srcroot=%origroot%src
-set outputroot=%origroot%output-%CONF%-%ARCH%
+set outputroot=%origroot%output-windows-%CONF%-%ARCH%
 
 if not exist "%outputroot%" mkdir "%outputroot%"
 if not exist "%outputroot%\bin" mkdir "%outputroot%\bin"
@@ -170,7 +170,7 @@ if %CURL_RESULT% == 0 (
 	copy lib\*.lib "%outputroot%\lib\"
 	copy lib\*.exp "%outputroot%\lib\"
 	copy lib\*.pdb "%outputroot%\lib\"
-	if not exist "%outputroot%\include\curl" mkdir "%outputroot%\include\curl"
+	if not exist %outputroot%\include\curl mkdir "%outputroot%\include\curl"
 	copy include\curl\*.h "%outputroot%\include\curl\"
 	cd "%srcroot%\curl"
 	copy COPYING "%origroot%\licenses\curl.txt"
@@ -183,9 +183,9 @@ echo ==============================
 
 cd "%srcroot%\regex"
 if "%ARCH%" == "x86" (
-	msbuild regex.sln /property:Configuration=%CONF% /property:Platform=Win32 /p:PlatformToolset=v142 /p:WindowsTargetPlatformVersion=10.0.18362.0
+	msbuild regex.sln /property:Configuration=%CONF% /property:Platform=Win32 /p:PlatformToolset=v141 /p:WindowsTargetPlatformVersion=10.0.16299.0
 ) else (
-	msbuild regex.sln /property:Configuration=%CONF% /property:Platform=x64 /p:PlatformToolset=v142 /p:WindowsTargetPlatformVersion=10.0.18362.0
+	msbuild regex.sln /property:Configuration=%CONF% /property:Platform=x64 /p:PlatformToolset=v141 /p:WindowsTargetPlatformVersion=10.0.16299.0
 )
 
 set REGEX_RESULT=%ERRORLEVEL%
@@ -208,9 +208,9 @@ echo ==============================
 
 cd "%srcroot%\glew\build\vc12"
 if "%ARCH%" == "x86" (
-	msbuild glew.sln /property:Configuration=%CONF% /property:Platform=Win32 /p:PlatformToolset=v142 /p:WindowsTargetPlatformVersion=10.0.18362.0
+	msbuild glew.sln /property:Configuration=%CONF% /property:Platform=Win32 /p:PlatformToolset=v141 /p:WindowsTargetPlatformVersion=10.0.16299.0
 ) else (
-	msbuild glew.sln /property:Configuration=%CONF% /property:Platform=x64 /p:PlatformToolset=v142 /p:WindowsTargetPlatformVersion=10.0.18362.0
+	msbuild glew.sln /property:Configuration=%CONF% /property:Platform=x64 /p:PlatformToolset=v141 /p:WindowsTargetPlatformVersion=10.0.16299.0
 )
 
 set GLEW_RESULT=%ERRORLEVEL%
@@ -238,9 +238,9 @@ echo ==============================
 
 cd "%srcroot%\SDL2\VisualC"
 if "%ARCH%" == "x86" (
-	msbuild SDL.sln /property:Configuration=%CONF% /property:Platform=Win32 /p:PlatformToolset=v142 /p:WindowsTargetPlatformVersion=10.0.18362.0
+	msbuild SDL.sln /property:Configuration=%CONF% /property:Platform=Win32 /p:PlatformToolset=v141 /p:WindowsTargetPlatformVersion=10.0.16299.0
 ) else (
-	msbuild SDL.sln /property:Configuration=%CONF% /property:Platform=x64 /p:PlatformToolset=v142 /p:WindowsTargetPlatformVersion=10.0.18362.0
+	msbuild SDL.sln /property:Configuration=%CONF% /property:Platform=x64 /p:PlatformToolset=v141 /p:WindowsTargetPlatformVersion=10.0.16299.0
 )
 
 set SDL2_RESULT=%ERRORLEVEL%
